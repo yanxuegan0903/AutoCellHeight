@@ -33,9 +33,7 @@
 - (void)layoutSubviews{
     [super layoutSubviews];
     
-    [self.label mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, 0, 0));
-    }];
+    self.label.frame = CGRectMake(0, 0, CGRectGetWidth(self.contentView.frame), CGRectGetHeight(self.contentView.frame));
     
     
 }
