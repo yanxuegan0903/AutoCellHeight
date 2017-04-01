@@ -15,9 +15,7 @@
 
 @property (nonatomic, strong) UITableView *tableView;
 
-@property (nonatomic, strong) NSArray<HeightModel *> *dataSource;
-
-@property (nonatomic, strong) HeightCell *proCell;
+@property (nonatomic, copy) NSArray<HeightModel *> *dataSource;
 
 @end
 
@@ -49,7 +47,6 @@
     tableView.delegate = self;
     tableView.dataSource = self;
     tableView.estimatedRowHeight = 44;
-    self.proCell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([HeightCell class])];
     self.tableView = tableView;
     
     
@@ -70,18 +67,20 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    HeightCell * cell = self.proCell;
     
-    [self config:cell indexPath:indexPath];
-    
-    
-    CGFloat height = [cell.label.text boundingRectWithSize:CGSizeMake(self.view.frame.size.width, 10000.0f) options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:cell.label.font} context:nil].size.height;
+    HeightCell * cell = [tableView cellForRowAtIndexPath:indexPath];
     
     
-
+    if (cell.model) {
+        CGFloat height = [cell.label.text boundingRectWithSize:CGSizeMake(self.view.frame.size.width, 10000.0f) options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:cell.label.font} context:nil].size.height;
+        
+        return height + 1;
+    }
     
     
-    return height + 1;
+    return 44;
+    
+    
 }
 
 
